@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/api" name="APIWorldtime" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/worldtime?city={city}">
+        <inSequence>
+            <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
+                <message>Begin of transaction</message>
+            </log>
+            <property expression="get-property('query.param.city')" name="uri.var.queryParamCity" scope="default" type="STRING"/>
+            <property name="X-Api-Key" scope="transport" type="STRING" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>
+            <property expression="fn:concat('https://api.api-ninjas.com/v1/worldtime?city=', $ctx:uri.var.queryParamCity)" name="uri.var.WorldtimeEndpoint" scope="default" type="STRING"/>
+            <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
+                <message>Before call endpoint</message>
+            </log>
+            <call>
+                <endpoint key="WorldtimeEndpoint"/>
+            </call>
+            <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
+                <message>After call endpoint</message>
+            </log>
+            <respond/>    
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>
