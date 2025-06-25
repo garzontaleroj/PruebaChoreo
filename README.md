@@ -1,2 +1,0 @@
-# PruebaChoreo
-PruebaChoreo
