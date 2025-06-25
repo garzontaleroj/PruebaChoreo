@@ -4,7 +4,7 @@ info:
   description: API Definition of APIWorldtime
   version: 1.0.0
 servers:
-- url: http://localhost:8290/api
+- url: http://localhost:8290/v1
 paths:
   /worldtime:
     get:

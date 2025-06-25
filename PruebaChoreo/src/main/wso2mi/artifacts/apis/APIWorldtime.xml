@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<api context="/api" name="APIWorldtime" xmlns="http://ws.apache.org/ns/synapse">
+<api context="/v1" name="APIWorldtime" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="GET" uri-template="/worldtime?city={city}">
         <inSequence>
             <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
@@ -7,6 +7,10 @@
             </log>
             <property expression="get-property('query.param.city')" name="uri.var.queryParamCity" scope="default" type="STRING"/>
             <property name="X-Api-Key" scope="transport" type="STRING" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>
+            <property name="Host" scope="transport" type="STRING" value="api.api-ninjas.com"/>
+            <header name="Content-Type" scope="transport" value="application/json"/>
+            <header name="Accept" scope="transport" value="application/json"/>
+            <header name="X-Api-Key" scope="transport" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>
             <property expression="fn:concat('https://api.api-ninjas.com/v1/worldtime?city=', $ctx:uri.var.queryParamCity)" name="uri.var.WorldtimeEndpoint" scope="default" type="STRING"/>
             <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
                 <message>Before call endpoint</message>
@@ -17,7 +21,7 @@
             <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
                 <message>After call endpoint</message>
             </log>
-            <respond/>    
+            <respond/>
         </inSequence>
         <faultSequence>
         </faultSequence>

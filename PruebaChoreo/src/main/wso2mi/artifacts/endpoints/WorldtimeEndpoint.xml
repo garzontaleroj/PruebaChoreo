@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoint name="WorldtimeEndpoint" xmlns="http://ws.apache.org/ns/synapse">
-    <http method="post" uri-template="{uri.var.WorldtimeEndpoint}">
+    <http method="get" statistics="enable" trace="enable" uri-template="{uri.var.WorldtimeEndpoint}">
         <suspendOnFailure>
             <initialDuration>-1</initialDuration>
-            <progressionFactor>1.0</progressionFactor>
+            <progressionFactor>1</progressionFactor>
         </suspendOnFailure>
         <markForSuspension>
             <retriesBeforeSuspension>0</retriesBeforeSuspension>
