@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: OrquestadorAPI
+  description: API Definition of OrquestadorAPI
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/orquestador
+paths:
+  /consultar:
+    get:
+      responses:
+        default:
+          description: Default response

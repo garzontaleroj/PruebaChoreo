@@ -1,0 +1,69 @@
+<api xmlns="http://ws.apache.org/ns/synapse" name="OrquestadorAPI" context="/orquestador">
+   <resource methods="GET" uri-template="/consultar">
+      <inSequence>
+         <!-- Llamada a primera API -->
+        <property name="X-Api-Key" scope="transport" type="STRING" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>
+        <property name="Host" scope="transport" type="STRING" value="api.api-ninjas.com"/>
+        <header name="Content-Type" scope="transport" value="application/json"/>
+        <header name="Accept" scope="transport" value="application/json"/>
+        <header name="X-Api-Key" scope="transport" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>
+         <call>
+            <endpoint>
+               <http method="GET" uri-template="https://api.api-ninjas.com/v1/randomuser"/>
+            </endpoint>
+         </call>
+         <property name="response1" expression="$body" scope="default"/>
+
+         <!-- Llamada a segunda API -->
+        <property name="X-Api-Key" scope="transport" type="STRING" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>
+        <property name="Host" scope="transport" type="STRING" value="api.api-ninjas.com"/>
+        <header name="Content-Type" scope="transport" value="application/json"/>
+        <header name="Accept" scope="transport" value="application/json"/>
+        <header name="X-Api-Key" scope="transport" value="XRKsS1U9C/FZQpiTROFWsA==lwj84PYzTtsN1WBt"/>         
+         <call>
+            <endpoint>
+               <http method="GET" uri-template="https://api.api-ninjas.com/v1/hobbies?category=general"/>
+            </endpoint>
+         </call>
+         <property name="response2" expression="$body" scope="default"/>
+
+         <!-- Enriquecer el cuerpo con ambas respuestas -->
+         <payloadFactory media-type="json">
+            <format>
+              {
+                "respuesta1": $1,
+                "respuesta2": $2
+              }
+            </format>
+            <args>
+               <arg expression="$ctx:response1"/>
+               <arg expression="$ctx:response2"/>
+            </args>
+         </payloadFactory>
+
+         <!-- Filtrado simple usando Script Mediator -->
+         <script language="js"><![CDATA[
+            var obj = JSON.parse(mc.getPayloadJSON());
+            obj.respuesta1 = obj.respuesta1.filter(e => e.sex === "F");
+            mc.setPayloadJSON(JSON.stringify(obj));
+         ]]></script>
+
+         <!-- Guardar archivo y enviarlo a SFTP (requiere configuración VFS o File Connector) -->
+         <property name="transport.vfs.FileURI" value="sftp://demo@test.rebex.net/pub/example/" scope="transport"/>
+         <property name="transport.vfs.FileName" expression="fn:concat('resultado-', fn:current-date(), '.json')" scope="transport"/>
+         <property name="transport.vfs.ContentType" value="application/json" scope="transport"/>
+         <property name="transport.vfs.Streaming" value="true" scope="transport"/>
+         <property name="transport.vfs.Append" value="false" scope="transport"/>
+
+         <send>
+            <endpoint>
+               <address uri="vfs:sftp"/>
+            </endpoint>
+         </send>
+      </inSequence>
+
+      <outSequence>
+         <respond/>
+      </outSequence>
+   </resource>
+</api>

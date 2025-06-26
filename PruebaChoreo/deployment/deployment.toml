@@ -17,6 +17,37 @@ password = "wso2carbon"
 alias = "symmetric.key.value"
 algorithm = "AES"
 
+[server]
+hostname = "localhost"
+node_id = "default"
+
+[transport.vfs]
+# Si vas a usar VFS para enviar al SFTP
+FileURI = "sftp://demo@test.rebex.net/pub/example/"
+FileName = "resultado.json"
+ContentType = "application/json"
+Streaming = true
+Append = false
+
+[transport.vfs.SFTP]
+# Parámetros de conexión al servidor SFTP
+host = "test.rebex.net"
+port = 22
+user = "demo"
+password = "password"  # Cambia esto por tu contraseña real
+# Puedes usar autenticación basada en llave si prefieres
+#privateKey = "/path/to/private/key"
+#passphrase = "frase_secreta"
+
+# Opción: Timeout y otras propiedades
+sessionTimeout = "30000"
+strictHostKeyChecking = "no"
+
+[mediation]
+inbound_threads = 10
+outbound_threads = 10
+
+
 ## Following are set of example configs. Please refer docs for complete set of configurations.
 
 # [transport.http]
