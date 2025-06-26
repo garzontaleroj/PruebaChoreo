@@ -2,7 +2,7 @@
 <api context="/v1" name="APIWorldtime" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="GET" uri-template="/worldtime?city={city}">
         <inSequence>
-            <log category="INFO" logMessageID="true" logFullPayload="true" description="Begin of transaction">
+            <log category="INFO" logMessageID="true" logFullPayload="true" description="Prueba 06262025 Tranxfer">
                 <message>Begin of transaction</message>
             </log>
             <property expression="get-property('query.param.city')" name="uri.var.queryParamCity" scope="default" type="STRING"/>
