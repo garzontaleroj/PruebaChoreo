@@ -1,57 +1,57 @@
 # PruebaChoreo - WSO2 Choreo Proxy Service
 
-## Descripción General
+## Descripcion General
 
-Este es un proyecto de prueba para la plataforma en la nube **WSO2 Choreo**, que implementa un servicio proxy para la API de Worldtime de API Ninjas. El proyecto está desarrollado usando WSO2 Micro Integrator y está diseñado para ser desplegado en la plataforma Choreo.
+Este es un proyecto de prueba para la plataforma en la nube **WSO2 Choreo**, que implementa un servicio proxy para la API de Worldtime de API Ninjas. El proyecto esta desarrollado usando WSO2 Micro Integrator y esta disenado para ser desplegado en la plataforma Choreo.
 
-## Características del Proyecto
+## Caracteristicas del Proyecto
 
 - **Plataforma**: WSO2 Choreo (Cloud)
-- **Tecnología**: WSO2 Micro Integrator
+- **Tecnologia**: WSO2 Micro Integrator
 - **Tipo**: Servicio Proxy/API Gateway
 - **API Externa**: [API Ninjas Worldtime](https://api-ninjas.com/api/worldtime)
-- **Método de Desarrollo**: Visual Studio Code con extensión WSO2 MI
+- **Metodo de Desarrollo**: Visual Studio Code con extension WSO2 MI
 
 ## Arquitectura
 
-El proyecto implementa un patrón de proxy service que:
+El proyecto implementa un patron de proxy service que:
 
 1. **Recibe solicitudes** en el endpoint `/v1/worldtime?city={city}`
-2. **Procesa parámetros** de la consulta (nombre de ciudad)
+2. **Procesa parametros** de la consulta (nombre de ciudad)
 3. **Enruta solicitudes** a la API externa de API Ninjas
-4. **Retorna respuestas** en formato JSON con información de zona horaria
+4. **Retorna respuestas** en formato JSON con informacion de zona horaria
 
 ### Componentes Principales
 
 #### 1. API Definition (`APIWorldtime.xml`)
 - **Contexto**: `/v1`
-- **Método**: GET
+- **Metodo**: GET
 - **URI Template**: `/worldtime?city={city}`
 - **Funcionalidades**:
   - Logging de transacciones
-  - Configuración de headers HTTP
-  - Manejo de parámetros de consulta
-  - Autenticación con API Key
+  - Configuracion de headers HTTP
+  - Manejo de parametros de consulta
+  - Autenticacion con API Key
 
 #### 2. Endpoint Configuration (`WorldtimeEndpoint.xml`)
 - **Nombre**: WorldtimeEndpoint
-- **Método**: GET
-- **URI Template**: Dinámico basado en parámetros
-- **Características**:
-  - Estadísticas habilitadas
+- **Metodo**: GET
+- **URI Template**: Dinamico basado en parametros
+- **Caracteristicas**:
+  - Estadisticas habilitadas
   - Trazabilidad habilitada
-  - Configuración de suspensión en fallos
+  - Configuracion de suspension en fallos
 
 #### 3. OpenAPI Specification (`APIWorldtime.yaml`)
-- **Versión**: OpenAPI 3.0.1
+- **Version**: OpenAPI 3.0.1
 - **Servidor**: http://localhost:8290/v1
-- **Parámetros**: city (query parameter)
+- **Parametros**: city (query parameter)
 
 ## Requisitos Previos
 
 ### Herramientas de Desarrollo
 - **Visual Studio Code**
-- **Extensión WSO2 MI para VS Code**: [Instalar desde aquí](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/)
+- **Extension WSO2 MI para VS Code**: [Instalar desde aqui](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/)
 - **Java 11** o superior
 - **Maven 3.6** o superior
 
@@ -62,28 +62,28 @@ El proyecto implementa un patrón de proxy service que:
 
 ```
 PruebaChoreo/
-├── src/main/wso2mi/
-│   ├── artifacts/
-│   │   ├── apis/
-│   │   │   └── APIWorldtime.xml          # Definición de la API
-│   │   └── endpoints/
-│   │       └── WorldtimeEndpoint.xml     # Configuración del endpoint
-│   └── resources/
-│       ├── api-definitions/
-│       │   └── APIWorldtime.yaml         # Especificación OpenAPI
-│       └── metadata/
-│           └── APIWorldtime_metadata.yaml # Metadatos de la API
-├── deployment/
-│   ├── deployment.toml                   # Configuración de despliegue
-│   └── docker/
-│       └── Dockerfile                    # Imagen Docker
-├── pom.xml                              # Configuración Maven
-└── README.md                            # Documentación del proyecto
+|-- src/main/wso2mi/
+|   |-- artifacts/
+|   |   |-- apis/
+|   |   |   +-- APIWorldtime.xml          # Definicion de la API
+|   |   +-- endpoints/
+|   |       +-- WorldtimeEndpoint.xml     # Configuracion del endpoint
+|   +-- resources/
+|       |-- api-definitions/
+|       |   +-- APIWorldtime.yaml         # Especificacion OpenAPI
+|       +-- metadata/
+|           +-- APIWorldtime_metadata.yaml # Metadatos de la API
+|-- deployment/
+|   |-- deployment.toml                   # Configuracion de despliegue
+|   +-- docker/
+|       +-- Dockerfile                    # Imagen Docker
+|-- pom.xml                              # Configuracion Maven
++-- README.md                            # Documentacion del proyecto
 ```
 
-## Configuración
+## Configuracion
 
-### 1. Configuración de API Key
+### 1. Configuracion de API Key
 
 Edita el archivo `APIWorldtime.xml` y actualiza el valor de la API Key:
 
@@ -91,15 +91,15 @@ Edita el archivo `APIWorldtime.xml` y actualiza el valor de la API Key:
 <property name="X-Api-Key" scope="transport" type="STRING" value="TU_API_KEY_AQUI"/>
 ```
 
-### 2. Configuración del Servidor
+### 2. Configuracion del Servidor
 
-El archivo `deployment/deployment.toml` contiene la configuración del servidor:
+El archivo `deployment/deployment.toml` contiene la configuracion del servidor:
 
 - **Hostname**: localhost
 - **Keystore**: wso2carbon.jks
 - **Truststore**: client-truststore.jks
 
-## Instalación y Ejecución
+## Instalacion y Ejecucion
 
 ### 1. Clonar el Repositorio
 
@@ -116,11 +116,11 @@ mvn clean install
 
 ### 3. Ejecutar Localmente
 
-Usando VS Code con la extensión WSO2 MI:
+Usando VS Code con la extension WSO2 MI:
 
 1. Abrir el proyecto en VS Code
-2. Usar la extensión WSO2 MI para ejecutar el servidor
-3. El servidor estará disponible en `http://localhost:8290`
+2. Usar la extension WSO2 MI para ejecutar el servidor
+3. El servidor estara disponible en `http://localhost:8290`
 
 ### 4. Desplegar en Choreo
 
@@ -155,9 +155,9 @@ curl -X GET "http://localhost:8290/v1/worldtime?city=London"
 }
 ```
 
-### Parámetros
+### Parametros
 
-| Parámetro | Tipo | Descripción | Ejemplo |
+| Parametro | Tipo | Descripcion | Ejemplo |
 |-----------|------|-------------|---------|
 | city | string | Nombre de la ciudad | London, Paris, Tokyo |
 
@@ -165,37 +165,37 @@ curl -X GET "http://localhost:8290/v1/worldtime?city=London"
 
 El proyecto incluye logging comprehensivo:
 
-- **Inicio de transacción**: Log al recibir solicitud
+- **Inicio de transaccion**: Log al recibir solicitud
 - **Antes de llamada externa**: Log antes de invocar API Ninjas
-- **Después de llamada externa**: Log después de recibir respuesta
+- **Despues de llamada externa**: Log despues de recibir respuesta
 - **Payloads completos**: Habilitado para debugging
 
 ## Seguridad
 
-- **Autenticación**: API Key para servicios externos
+- **Autenticacion**: API Key para servicios externos
 - **HTTPS**: Soporte configurado
-- **Keystores**: Configuración de certificados incluida
+- **Keystores**: Configuracion de certificados incluida
 
 ## Desarrollo
 
-### Extensión de VS Code
+### Extension de VS Code
 
-Este proyecto utiliza la [extensión WSO2 MI para Visual Studio Code](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/) que proporciona:
+Este proyecto utiliza la [extension WSO2 MI para Visual Studio Code](https://mi.docs.wso2.com/en/latest/develop/mi-for-vscode/install-wso2-mi-for-vscode/) que proporciona:
 
 - **Autocompletado** para sintaxis de Synapse
 - **Debugging** integrado
 - **Despliegue directo** a servidores MI
-- **Validación** de configuraciones
+- **Validacion** de configuraciones
 
-### Mejores Prácticas Implementadas
+### Mejores Practicas Implementadas
 
-1. **Separación de responsabilidades**: API y Endpoint separados
-2. **Configuración externa**: Parámetros configurables
+1. **Separacion de responsabilidades**: API y Endpoint separados
+2. **Configuracion externa**: Parametros configurables
 3. **Logging comprehensivo**: Para debugging y monitoreo
 4. **Manejo de errores**: Secuencias de fallo configuradas
-5. **Documentación**: OpenAPI specification incluida
+5. **Documentacion**: OpenAPI specification incluida
 
-## Contribución
+## Contribucion
 
 Para contribuir al proyecto:
 
@@ -206,7 +206,7 @@ Para contribuir al proyecto:
 
 ## Soporte
 
-Para soporte técnico:
+Para soporte tecnico:
 
 - **WSO2 Documentation**: [docs.wso2.com](https://docs.wso2.com/)
 - **API Ninjas**: [api-ninjas.com](https://api-ninjas.com/)
@@ -214,7 +214,7 @@ Para soporte técnico:
 
 ## Licencia
 
-Este proyecto es una prueba de concepto y está disponible para fines educativos y de demostración.
+Este proyecto es una prueba de concepto y esta disponible para fines educativos y de demostracion.
 
 ---
 
